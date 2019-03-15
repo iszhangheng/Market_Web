@@ -1,0 +1,24 @@
+.demo-container {
+  margin: 0 20px;
+  padding: 20px;
+  background: #fff;
+  font-size: 14px;
+  color: #5e6d82;
+
+  a {
+    color: #429dfb;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .title {
+    font-weight: normal;
+    color: #1f2f3d;
+  }
+
+  .demo-pb {
+    margin-bottom: 20px;
+  }
+}
