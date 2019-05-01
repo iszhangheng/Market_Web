@@ -3,63 +3,68 @@ import {
   Message
   // MessageBox
 } from 'element-ui';
-// import store from '../store';
-// import {
-//   setToken,
-//   getToken
-// } from '@/utils/auth';
+import store from '../store';
+import {
+  setToken,
+  getToken
+} from '@/utils/auth';
 
 // 创建axios实例
 const service = axios.create({
-  // 配置接口的协议地址端口信息
-  baseURL: process.env.BASE_API,
+  baseURL: process.env.BASE_API, // api的base_url
   headers: {
-    // 设置请求方式
+    // 'Content-Type': 'application/x-www-form-urlencoded'
     'Content-Type': 'application/json'
   },
-  // 请求超时时间
-  timeout: 30000
+  timeout: 30000 // 请求超时时间
 });
 
 // request拦截器
 service.interceptors.request.use(config => {
-  // 将服务器返回的Token令牌放入请求头
-  // config.headers['x-token'] = getToken();
+  config.headers['x-token'] = getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
   return config;
 }, error => {
+  // Do something with request error
+  console.log(error); // for debug
   Promise.reject(error);
 });
 
 // respone拦截器
 service.interceptors.response.use(
   response => {
-    // // 获取请求返回的数据
-    // const res = response.data;
-    // // 正常返回的状态码为000000若状态码不是000000则进入异常处理
-    // if (res.rcode !== '000000') {
+    /**
+     * rcode为非20000是抛错 可结合自己业务进行修改
+     */
+    const res = response.data;
+    if (res.rcode !== '000000') {
+      // Message({
+      //   message: res.message,
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // });
 
-    //   // 状态码'999999'为令牌过期需重新登录
-    //   if (res.rcode === '999999') {
-    //     store.dispatch('FedLogOut').then(() => {
-    //       // 为了重新实例化vue-router对象 避免bug
-    //       location.reload();
-    //     });
-    //   }
-    //   if (res.rcode === '999998') {
-    //     Message({
-    //       message: res.msg,
-    //       type: 'error',
-    //       duration: 5 * 1000
-    //     });
-    //   }
-    // } else {
-    //   // 若返回数据正常则将返回的新令牌记录下来
-    //   setToken(response.headers['x-token']);
-    //   return response.data;
-    // }
+      // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
+      if (res.rcode === '999999') {
+        store.dispatch('FedLogOut').then(() => {
+          location.reload(); // 为了重新实例化vue-router对象 避免bug
+        });
+      }
+      if (res.rcode === '999998') {
+        Message({
+          message: res.msg,
+          type: 'error',
+          duration: 5 * 1000
+        });
+      }
+      // return Promise.reject('error');
+    } else {
+      // setToken(response.headers['x-token']);
+      setToken('admin_token');
+      return response.data;
+    }
   },
   error => {
-    console.log('err' + error);
+    console.log('err' + error); // for debug
     Message({
       message: error.message,
       type: 'error',

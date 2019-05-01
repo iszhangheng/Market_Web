@@ -5,7 +5,7 @@ import request from '@/utils/request';
 
 export function login(userName, userPassword) {
   return request({
-    url: 'user_info.tml?flow=login',
+    url: 'login.tml',
     method: 'post',
     data: {
       userName,
@@ -16,7 +16,7 @@ export function login(userName, userPassword) {
 
 export function getInfo() {
   return request({
-    url: 'user_info.tml?flow=getUser',
+    url: 'employee_info/get_info.tml',
     method: 'post'
   });
 }

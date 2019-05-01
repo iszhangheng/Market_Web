@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 // 通过 post请求时，参数选择 data
 // 通过 get请求时，参数选择 params
-
+const isDev = process.env.NODE_ENV === 'development';
 const url = {
   bankList: 'tb_bank_code.tml?flow=list', // 银行字典
   bankAdd: 'tb_bank_code.tml?flow=replaceInfo',
@@ -14,10 +14,10 @@ const url = {
   sysRemove: 'tb_sys_code.tml?flow=removeById',
   sysCodeTypeList: 'tb_sys_code.tml?flow=codeTypeList',
 
-  pageList: 'page_name_url.tml?flow=list', // 页面字典
-  pageAdd: 'page_name_url.tml?flow=addInfo', // 增
-  pageUpdate: 'page_name_url.tml?flow=updateById', // 改
-  pageRemove: 'page_name_url.tml?flow=removeById' // 删
+  pageList: isDev ? '/pageDictionary/list' : '/page_dictionary/get_table.tml', // 页面字典
+  pageAdd: '/page_dictionary/add_page.tml', // 增
+  pageUpdate: '/page_dictionary/update_page.tml', // 改
+  pageRemove: '/page_dictionary/delete_page.tml' // 删
 };
 const dictionaryApi = {
   bankList(data) {

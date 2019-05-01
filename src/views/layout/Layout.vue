@@ -1,9 +1,7 @@
 <template>
   <div class="tiny-wrap"
     :class="{hideSidebar:!sidebar.opened}">
-    <!-- 左侧边栏 -->
     <div class="tiny-sidebar">
-      <!-- 点击左上角图标跳转到根目录 -->
       <div class="tiny-logo">
         <router-link to="/">
           <img class="logo-max"
@@ -14,7 +12,6 @@
             src="../../assets/images/sunline_logo_mini.png">
         </router-link>
       </div>
-      <!-- 选项 -->
       <sidebar class="sidebar-container"></sidebar>
     </div>
     <div class="tiny-layout">

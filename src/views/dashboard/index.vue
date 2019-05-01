@@ -4,8 +4,9 @@
     <p>帮助移动开发者收集、处理、分析第一方数据。<br />透析全面运营指标，掌握用户行为，改善产品设计</p>
     <b><img src="./../../assets/images/pic-weApp.png" /></b>
     <ul>
-      <li>服务监控</li>
-      <li>用户行为分析</li>
+      <li>行为分析</li>
+      <li>性能分析</li>
+      <li>字典管理</li>
     </ul>
   </div>
 </template>

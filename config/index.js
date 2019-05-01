@@ -11,8 +11,20 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:8000/',
-        changeOrigin: true //是否跨域
+        // target: 'https://www.easy-mock.com/mock/5ad85d1fc0574640cf73e948/sunline-admin',
+
+        // 杭州服务器
+        //  target: 'http://10.25.1.203:8000/tinyuba_admin/',
+
+        // dev服务器
+        //  target: 'http://139.199.148.202:8080/tinyuba_admin/',
+        // ......
+        // target: 'http://10.25.0.196:8000/',
+        // target: 'http://10.25.1.167:8000/',
+        target: 'https://www.easy-mock.com/mock/5cc503296b39e257dff4e85d',
+        // 本地服务器
+        // target: 'http://localhost:8000/tinyuba_admin',
+        changeOrigin: true // 是否跨域
       }
     },
 

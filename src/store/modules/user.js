@@ -37,13 +37,9 @@ const user = {
     Login({
       commit
     }, userInfo) {
-      const username = userInfo.username.trim();// 用户名
-      const userpwd = userInfo.password; // 口令
+      const username = userInfo.username.trim();
       return new Promise((resolve, reject) => {
-        login(username, userpwd).then(response => {
-          // const data = response.robj;
-          // setToken(data.token);
-          // commit('SET_TOKEN', data.token);
+        login(username, userInfo.password).then(() => {
           resolve();
         }).catch(error => {
           reject(error);

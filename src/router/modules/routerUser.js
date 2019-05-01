@@ -1,20 +1,12 @@
 export default [
   {
-    path: '',
-    name: 'userattributes',
+    path: 'base',
+    name: 'base',
+    component: () =>
+      import('@/views/personalDetail/index.vue'),
     meta: {
-      title: 'attributes'
-      // icon: ''
+      title: 'attributes',
+      roles: 'base'
     }
   }
-  // {
-  //   path: 'user-attributes',
-  //   name: 'userattributes',
-  //   component: () =>
-  //     import('@/views/user/userAttributes/index'),
-  //   meta: {
-  //     title: 'attributes'
-  //     // icon: ''
-  //   }
-  // }
 ];

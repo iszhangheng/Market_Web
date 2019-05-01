@@ -1,6 +1,5 @@
 <template>
   <section>
-    <!-- 面包屑 -->
     <breadcrumb></breadcrumb>
     <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
