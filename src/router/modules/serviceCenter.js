@@ -5,7 +5,7 @@ export default [
     component: () =>
       import('@/views/serviceCenter/index.vue'),
     meta: {
-      title: 'restRequest',
+      title: 'restRequest', // 休假申请
       roles: 'base'
     }
   },
@@ -15,7 +15,7 @@ export default [
     component: () =>
       import('@/views/personalDetail/index.vue'),
     meta: {
-      title: 'cancellTheLeave',
+      title: 'cancellTheLeave', // 销假申请
       roles: 'base'
     }
   },
@@ -25,7 +25,7 @@ export default [
     component: () =>
       import('@/views/serviceCenter/index.vue'),
     meta: {
-      title: 'expenseRequest',
+      title: 'expenseRequest', // 报销申请
       roles: 'base'
     }
   }

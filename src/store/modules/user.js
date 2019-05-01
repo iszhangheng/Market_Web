@@ -53,7 +53,7 @@ const user = {
     }) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
-          const data = response.robj.items;
+          const data = response.robj;
           commit('SET_ROLES', data.roles);
           commit('SET_NAME', data.name);
           commit('SET_AVATAR', data.avatar || 'https://gitee.com/uploads/57/302857_webcjs.png');

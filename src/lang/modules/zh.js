@@ -1,6 +1,25 @@
 export default {
   route: {
     dashboard: '首页',
+    // 工作模块
+    workCenter: '工作台',
+    productDetails: '产品详情',
+    sellLog: '销售记录',
+    purchaseRequest: '采购申请',
+    inStorageRequest: '入库申请',
+    outStorageRequest: '出库申请',
+    productBadRequest: '商品损毁报告',
+    // 服务中心模块
+    serviceCenter: '服务中心',
+    restRequest: '休假申请',
+    cancellTheLeave: '销假申请',
+    expenseRequest: '出差报销',
+    // 个人中心模块
+    personalDetail: '个人中心',
+    myHoliday: '我的假期',
+    myFlow: '我的流程',
+    myCheckingIn: '我的考勤',
+    myInfo: '我的信息',
     user: '用户',
     product: '产品',
     service: '服务',
@@ -46,6 +65,10 @@ export default {
     depositsToBuy: '存款购买',
     accountService: '开户服务',
     balanceQuery: '余额查询'
+  },
+  productDetails: {
+    request: '请输入商品名称/ID',
+    productName: '商品名称/ID'
   },
   navbar: {
     logOut: '退出登录',

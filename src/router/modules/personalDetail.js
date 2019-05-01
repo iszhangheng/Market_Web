@@ -5,7 +5,7 @@ export default [
     component: () =>
       import('@/views/personalDetail/index.vue'),
     meta: {
-      title: 'myHoliday',
+      title: 'myHoliday', // 我的假期
       roles: 'base'
     }
   },
@@ -15,7 +15,7 @@ export default [
     component: () =>
       import('@/views/personalDetail/index.vue'),
     meta: {
-      title: 'myFlow',
+      title: 'myFlow', // 我的流程
       roles: 'base'
     }
   },
@@ -25,7 +25,7 @@ export default [
     component: () =>
       import('@/views/personalDetail/index.vue'),
     meta: {
-      title: 'myCheckingIn',
+      title: 'myCheckingIn', // 我的考勤
       roles: 'base'
     }
   },
@@ -35,7 +35,7 @@ export default [
     component: () =>
       import('@/views/personalDetail/index.vue'),
     meta: {
-      title: 'myInfo',
+      title: 'myInfo', // 个人信息
       roles: 'base'
     }
   }

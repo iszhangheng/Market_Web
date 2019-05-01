@@ -3,7 +3,7 @@ export default [
     path: 'product-details',
     name: 'productDetails',
     component: () =>
-      import('@/views/workCenter/index.vue'),
+      import('@/views/workCenter/productDetails/index.vue'),
     meta: {
       title: 'productDetails', // 产品详情
       roles: 'base'
