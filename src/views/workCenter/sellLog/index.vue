@@ -1,16 +1,16 @@
 <template>
   <div class="tiny-container">
-    <h3 class="page-title">商品详细信息</h3>
+    <h3 class="page-title">商品销售列表</h3>
     <!-- 功能模块 -->
     <el-form class="search-form"
       :inline="true"
       size="mini">
       <!-- 请求名称或URL -->
-      <el-form-item :label="this.$t('productDetails.productName')"
+      <el-form-item :label="this.$t('sellLog.productName')"
         prop="name">
         <el-input v-model="productName"
           @keyup.enter.native="query()"
-          :placeholder="this.$t('productDetails.request')"
+          :placeholder="this.$t('sellLog.request')"
           clearable></el-input>
       </el-form-item>
       <!-- 筛选条件 -->
@@ -58,7 +58,7 @@
 <script>
 import workCenterApi from '@/api/workCenter';
 export default {
-  name: 'productDetails',
+  name: 'sellLog',
   data() {
     return {
       listLoading: false, // 加载动画开关
@@ -73,24 +73,24 @@ export default {
     columns() {
       return [
         {
+          name: '销售单号',
+          align: 'center',
+          prop: 'sellId'
+        },
+        {
           name: '商品编号',
           align: 'center',
           prop: 'productId'
         },
         {
-          name: '类别',
-          align: 'center',
-          prop: 'productType'
-        },
-        {
-          name: '名称',
+          name: '商品名称',
           align: 'center',
           prop: 'productName'
         },
         {
-          name: '单价',
+          name: '售价',
           align: 'center',
-          prop: 'unitPrice'
+          prop: 'sellPrice'
         },
         {
           name: '单位',
@@ -98,24 +98,14 @@ export default {
           prop: 'unit'
         },
         {
-          name: '销售量',
+          name: '数量',
           align: 'center',
-          prop: 'sellNum'
-        },
-        {
-          name: '库存量',
-          align: 'center',
-          prop: 'keepNum'
+          prop: 'num'
         },
         {
           name: '折扣',
           align: 'center',
           prop: 'discount'
-        },
-        {
-          name: '保质期',
-          align: 'center',
-          prop: 'expirationDate'
         }
       ];
     }
@@ -129,7 +119,7 @@ export default {
       this.listLoading = true;
       const data = {};
       workCenterApi
-        .productDetails(data)
+        .sellLog(data)
         .then(res => {
           this.total = res.robj.total;
           this.list = res.robj.items;

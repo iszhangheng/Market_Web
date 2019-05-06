@@ -1,5 +1,4 @@
-export default [
-  {
+export default [{
     path: 'product-details',
     name: 'productDetails',
     component: () =>
@@ -10,15 +9,26 @@ export default [
     }
   },
   {
+    path: 'company_profit',
+    name: 'companyProfit',
+    component: () =>
+      import('@/views/workCenter/companyProfit/index.vue'),
+    meta: {
+      title: 'companyProfit', // 公司盈利
+      roles: 'base'
+    }
+  },
+  {
     path: 'sell-log',
     name: 'sellLog',
     component: () =>
-      import('@/views/workCenter/index.vue'),
+      import('@/views/workCenter/sellLog/index.vue'),
     meta: {
       title: 'sellLog', // 销售记录
       roles: 'base'
     }
   },
+  // 采购部
   {
     path: 'purchase-request',
     name: 'purchaseRequest',
@@ -29,23 +39,24 @@ export default [
       roles: 'base'
     }
   },
-  {
-    path: 'in-storage-request',
-    name: 'inStorageRequest',
-    component: () =>
-      import('@/views/workCenter/index.vue'),
-    meta: {
-      title: 'inStorageRequest', // 入库申请
-      roles: 'base'
-    }
-  },
+  // 销售部
   {
     path: 'out-storage-request',
     name: 'outStorageRequest',
     component: () =>
       import('@/views/workCenter/index.vue'),
     meta: {
-      title: 'outStorageRequest', // 出库申请
+      title: 'outStorageRequest', // 销售申请
+      roles: 'base'
+    }
+  },
+  {
+    path: 'indent_request',
+    name: 'indentRequest',
+    component: () =>
+      import('@/views/workCenter/index.vue'),
+    meta: {
+      title: 'indentRequest', // 订单查询
       roles: 'base'
     }
   },
@@ -56,6 +67,17 @@ export default [
       import('@/views/workCenter/index.vue'),
     meta: {
       title: 'productBadRequest', // 商品损毁报告
+      roles: 'base'
+    }
+  },
+  // 人事部
+  {
+    path: 'employee_info',
+    name: 'employeeInfo',
+    component: () =>
+      import('@/views/workCenter/index.vue'),
+    meta: {
+      title: 'employeeInfo', // 员工基本信息
       roles: 'base'
     }
   }

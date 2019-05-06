@@ -73,49 +73,19 @@ export default {
     columns() {
       return [
         {
-          name: '商品编号',
+          name: '名称',
           align: 'center',
-          prop: 'productId'
+          prop: '1'
         },
         {
           name: '类别',
           align: 'center',
-          prop: 'productType'
+          prop: '2'
         },
         {
-          name: '名称',
+          name: '金额',
           align: 'center',
-          prop: 'productName'
-        },
-        {
-          name: '单价',
-          align: 'center',
-          prop: 'unitPrice'
-        },
-        {
-          name: '单位',
-          align: 'center',
-          prop: 'unit'
-        },
-        {
-          name: '销售量',
-          align: 'center',
-          prop: 'sellNum'
-        },
-        {
-          name: '库存量',
-          align: 'center',
-          prop: 'keepNum'
-        },
-        {
-          name: '折扣',
-          align: 'center',
-          prop: 'discount'
-        },
-        {
-          name: '保质期',
-          align: 'center',
-          prop: 'expirationDate'
+          prop: '3'
         }
       ];
     }

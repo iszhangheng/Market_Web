@@ -1,16 +1,16 @@
 <template>
   <div class="tiny-container">
-    <h3 class="page-title">商品详细信息</h3>
+    <h3 class="page-title">我的考勤</h3>
     <!-- 功能模块 -->
     <el-form class="search-form"
       :inline="true"
       size="mini">
-      <!-- 请求名称或URL -->
-      <el-form-item :label="this.$t('productDetails.productName')"
+      <!-- 考勤状态赛选 -->
+      <el-form-item :label="this.$t('myCheck.checkType')"
         prop="name">
         <el-input v-model="productName"
           @keyup.enter.native="query()"
-          :placeholder="this.$t('productDetails.request')"
+          :placeholder="this.$t('myCheck.checkType')"
           clearable></el-input>
       </el-form-item>
       <!-- 筛选条件 -->
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import workCenterApi from '@/api/workCenter';
+import personDetailsApi from '@/api/personDetails';
 export default {
   name: 'productDetails',
   data() {
@@ -73,49 +73,34 @@ export default {
     columns() {
       return [
         {
-          name: '商品编号',
+          name: '日期',
           align: 'center',
-          prop: 'productId'
+          prop: 'date'
         },
         {
-          name: '类别',
+          name: '统计类型',
           align: 'center',
-          prop: 'productType'
+          prop: 'checkType'
         },
         {
-          name: '名称',
+          name: '工作日类型',
           align: 'center',
-          prop: 'productName'
+          prop: 'workDayType'
         },
         {
-          name: '单价',
+          name: '上班打卡时间',
           align: 'center',
-          prop: 'unitPrice'
+          prop: 'inWorkTime'
         },
         {
-          name: '单位',
+          name: '下班打卡时间',
           align: 'center',
-          prop: 'unit'
+          prop: 'outWorkTime'
         },
         {
-          name: '销售量',
+          name: '状态',
           align: 'center',
-          prop: 'sellNum'
-        },
-        {
-          name: '库存量',
-          align: 'center',
-          prop: 'keepNum'
-        },
-        {
-          name: '折扣',
-          align: 'center',
-          prop: 'discount'
-        },
-        {
-          name: '保质期',
-          align: 'center',
-          prop: 'expirationDate'
+          prop: 'state'
         }
       ];
     }
@@ -128,8 +113,8 @@ export default {
       // 查询表格信息
       this.listLoading = true;
       const data = {};
-      workCenterApi
-        .productDetails(data)
+      personDetailsApi
+        .myCheck(data)
         .then(res => {
           this.total = res.robj.total;
           this.list = res.robj.items;

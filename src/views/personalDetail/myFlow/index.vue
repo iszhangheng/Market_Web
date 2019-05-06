@@ -1,16 +1,16 @@
 <template>
   <div class="tiny-container">
-    <h3 class="page-title">商品详细信息</h3>
+    <h3 class="page-title">我的流程</h3>
     <!-- 功能模块 -->
     <el-form class="search-form"
       :inline="true"
       size="mini">
-      <!-- 请求名称或URL -->
-      <el-form-item :label="this.$t('productDetails.productName')"
+      <!-- 流程名赛选 -->
+      <el-form-item :label="this.$t('myFlow.flowName')"
         prop="name">
         <el-input v-model="productName"
           @keyup.enter.native="query()"
-          :placeholder="this.$t('productDetails.request')"
+          :placeholder="this.$t('myFlow.flowName')"
           clearable></el-input>
       </el-form-item>
       <!-- 筛选条件 -->
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import workCenterApi from '@/api/workCenter';
+import personDetailsApi from '@/api/personDetails';
 export default {
   name: 'productDetails',
   data() {
@@ -73,50 +73,46 @@ export default {
     columns() {
       return [
         {
-          name: '商品编号',
+          name: '单据号',
           align: 'center',
-          prop: 'productId'
+          prop: 'billsId'
         },
         {
-          name: '类别',
+          name: '标题',
           align: 'center',
-          prop: 'productType'
+          prop: 'title'
         },
         {
-          name: '名称',
+          name: '申请人',
           align: 'center',
-          prop: 'productName'
+          prop: 'employeeName'
         },
         {
-          name: '单价',
+          name: '当前步骤',
           align: 'center',
-          prop: 'unitPrice'
+          prop: 'currentProcedure'
         },
         {
-          name: '单位',
+          name: '当前办理人',
           align: 'center',
-          prop: 'unit'
+          prop: 'currentLeader'
         },
         {
-          name: '销售量',
+          name: '申请时间',
           align: 'center',
-          prop: 'sellNum'
+          prop: 'createDate'
         },
         {
-          name: '库存量',
+          name: '流程名称',
           align: 'center',
-          prop: 'keepNum'
-        },
-        {
-          name: '折扣',
-          align: 'center',
-          prop: 'discount'
-        },
-        {
-          name: '保质期',
-          align: 'center',
-          prop: 'expirationDate'
-        }
+          prop: 'flowName'
+        } // ,
+        // {
+        //   name: '操作',
+        //   align: 'center',
+        //   prop: 'operation',
+        //   'show-overflow-tooltip': true
+        // }
       ];
     }
   },
@@ -128,8 +124,8 @@ export default {
       // 查询表格信息
       this.listLoading = true;
       const data = {};
-      workCenterApi
-        .productDetails(data)
+      personDetailsApi
+        .myFlow(data)
         .then(res => {
           this.total = res.robj.total;
           this.list = res.robj.items;

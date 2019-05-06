@@ -1,16 +1,16 @@
 <template>
   <div class="tiny-container">
-    <h3 class="page-title">商品详细信息</h3>
+    <h3 class="page-title">我的休假</h3>
     <!-- 功能模块 -->
     <el-form class="search-form"
       :inline="true"
       size="mini">
-      <!-- 请求名称或URL -->
-      <el-form-item :label="this.$t('productDetails.productName')"
+      <!-- 休假类型赛选 -->
+      <el-form-item :label="this.$t('myHoliday.holidayType')"
         prop="name">
         <el-input v-model="productName"
           @keyup.enter.native="query()"
-          :placeholder="this.$t('productDetails.request')"
+          :placeholder="this.$t('myHoliday.holidayType')"
           clearable></el-input>
       </el-form-item>
       <!-- 筛选条件 -->
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import workCenterApi from '@/api/workCenter';
+import personDetailsApi from '@/api/personDetails';
 export default {
   name: 'productDetails',
   data() {
@@ -73,49 +73,24 @@ export default {
     columns() {
       return [
         {
-          name: '商品编号',
+          name: '请假类型',
           align: 'center',
-          prop: 'productId'
+          prop: 'holidayType'
         },
         {
-          name: '类别',
+          name: '请假时间',
           align: 'center',
-          prop: 'productType'
+          prop: 'date'
         },
         {
-          name: '名称',
+          name: '请假天数',
           align: 'center',
-          prop: 'productName'
+          prop: 'sumDay'
         },
         {
-          name: '单价',
+          name: '状态',
           align: 'center',
-          prop: 'unitPrice'
-        },
-        {
-          name: '单位',
-          align: 'center',
-          prop: 'unit'
-        },
-        {
-          name: '销售量',
-          align: 'center',
-          prop: 'sellNum'
-        },
-        {
-          name: '库存量',
-          align: 'center',
-          prop: 'keepNum'
-        },
-        {
-          name: '折扣',
-          align: 'center',
-          prop: 'discount'
-        },
-        {
-          name: '保质期',
-          align: 'center',
-          prop: 'expirationDate'
+          prop: 'state'
         }
       ];
     }
@@ -128,8 +103,8 @@ export default {
       // 查询表格信息
       this.listLoading = true;
       const data = {};
-      workCenterApi
-        .productDetails(data)
+      personDetailsApi
+        .myHoliday(data)
         .then(res => {
           this.total = res.robj.total;
           this.list = res.robj.items;

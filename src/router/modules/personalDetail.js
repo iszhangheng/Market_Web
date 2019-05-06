@@ -3,7 +3,7 @@ export default [
     path: 'my-holiday',
     name: 'myHoliday',
     component: () =>
-      import('@/views/personalDetail/index.vue'),
+      import('@/views/personalDetail/myHoliday/index.vue'),
     meta: {
       title: 'myHoliday', // 我的假期
       roles: 'base'
@@ -13,19 +13,19 @@ export default [
     path: 'my-flow',
     name: 'myFlow',
     component: () =>
-      import('@/views/personalDetail/index.vue'),
+      import('@/views/personalDetail/myFlow/index.vue'),
     meta: {
       title: 'myFlow', // 我的流程
       roles: 'base'
     }
   },
   {
-    path: 'my-checking-in',
-    name: 'myCheckingIn',
+    path: 'my-check',
+    name: 'myCheck',
     component: () =>
-      import('@/views/personalDetail/index.vue'),
+      import('@/views/personalDetail/myCheck/index.vue'),
     meta: {
-      title: 'myCheckingIn', // 我的考勤
+      title: 'myCheck', // 我的考勤
       roles: 'base'
     }
   },

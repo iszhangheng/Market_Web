@@ -3,12 +3,14 @@ export default {
     dashboard: '首页',
     // 工作模块
     workCenter: '工作台',
+    companyProfit: '公司盈利',
     productDetails: '产品详情',
     sellLog: '销售记录',
     purchaseRequest: '采购申请',
-    inStorageRequest: '入库申请',
-    outStorageRequest: '出库申请',
+    outStorageRequest: '销售申请',
+    indentRequest: '订单查询',
     productBadRequest: '商品损毁报告',
+    employeeInfo: '员工信息',
     // 服务中心模块
     serviceCenter: '服务中心',
     restRequest: '休假申请',
@@ -16,9 +18,9 @@ export default {
     expenseRequest: '出差报销',
     // 个人中心模块
     personalDetail: '个人中心',
-    myHoliday: '我的假期',
+    myHoliday: '我的休假',
     myFlow: '我的流程',
-    myCheckingIn: '我的考勤',
+    myCheck: '我的考勤',
     myInfo: '我的信息',
     user: '用户',
     product: '产品',
@@ -66,9 +68,28 @@ export default {
     accountService: '开户服务',
     balanceQuery: '余额查询'
   },
+  // 商品详情模块
   productDetails: {
     request: '请输入商品名称/ID',
     productName: '商品名称/ID'
+  },
+  // 商品销售记录模块
+  sellLog: {
+    productName: '商品名称/ID',
+    request: '请输入商品名称/ID'
+  },
+  // 流程模块
+  myFlow: {
+    flowName: '流程名称'
+  },
+  // 我的休假
+  myHoliday: {
+    pageTitle: '我的休假',
+    holidayType: '休假类型'
+  },
+  // 我的考勤
+  myCheck: {
+    checkType: '考勤类型'
   },
   navbar: {
     logOut: '退出登录',
@@ -76,7 +97,7 @@ export default {
   },
   login: {
     // title: 'TinyWeb 管理系统',
-    title: '移动应用统计分析',
+    title: '商场综合管理系统',
     logIn: '登录',
     username: '账号',
     password: '密码'
