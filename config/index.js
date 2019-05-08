@@ -21,9 +21,9 @@ module.exports = {
         // ......
         // target: 'http://10.25.0.196:8000/',
         // target: 'http://10.25.1.167:8000/',
-        target: 'https://www.easy-mock.com/mock/5cc503296b39e257dff4e85d',
+        // target: 'https://www.easy-mock.com/mock/5cc503296b39e257dff4e85d',
         // 本地服务器
-        // target: 'http://localhost:8000/tinyuba_admin',
+        target: 'http://localhost:8000',
         changeOrigin: true // 是否跨域
       }
     },

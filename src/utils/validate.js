@@ -1,7 +1,8 @@
-
 export function isvalidUsername(str) {
-  const valid_map = ['admin', 'yhtadmin', 'yhtuba'];
-  return valid_map.indexOf(str.trim()) >= 0;
+  if (str === null || str.length === 0) {
+    return false;
+  }
+  return true;
 }
 
 /* 合法uri*/
@@ -27,4 +28,3 @@ export function validatAlphabets(str) {
   const reg = /^[A-Za-z]+$/;
   return reg.test(str);
 }
-

@@ -6,6 +6,13 @@
       :inline="true"
       size="mini">
       <!-- 请求名称或URL -->
+      <el-form-item :label="this.$t('sellLog.sellDate')"
+        prop="name">
+        <el-date-picker v-model="value1"
+          type="date"
+          placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item :label="this.$t('sellLog.productName')"
         prop="name">
         <el-input v-model="productName"
@@ -62,8 +69,49 @@ export default {
   data() {
     return {
       listLoading: false, // 加载动画开关
-      total: 0, // 返回的表格数据总条数
-      list: [], // 表格数据
+      total: 4, // 返回的表格数据总条数
+      list: [
+        {
+          sellId: '1235645678',
+          productId: '1254682313',
+          productName: '牙膏',
+          sellPrice: '售价',
+          unit: '管',
+          num: '10',
+          discount: '_',
+          sellDate: '2019-05-08'
+        },
+        {
+          sellId: '1235645679',
+          productId: '1254682314',
+          productName: '牙刷',
+          sellPrice: '12',
+          unit: '支',
+          num: '10',
+          discount: '_',
+          sellDate: '2019-05-08'
+        },
+        {
+          sellId: '1235645680',
+          productId: '1254682315',
+          productName: '奶糖',
+          sellPrice: '100',
+          unit: '盒',
+          num: '10',
+          discount: '_',
+          sellDate: '2019-05-08'
+        },
+        {
+          sellId: '1235645681',
+          productId: '12546823145',
+          productName: '雪糕',
+          sellPrice: '3',
+          unit: '块',
+          num: '10',
+          discount: '_',
+          sellDate: '2019-05-08'
+        }
+      ], // 表格数据
       currentPage: 1, // 当前页码
       pageSize: 10, // 页面大小
       productName: '' // 商品名查询
@@ -106,6 +154,11 @@ export default {
           name: '折扣',
           align: 'center',
           prop: 'discount'
+        },
+        {
+          name: '时间',
+          align: 'center',
+          prop: 'sellDate'
         }
       ];
     }

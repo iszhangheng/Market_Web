@@ -5,7 +5,8 @@ const baseUrl = '/person_details';
 const url = {
   myCheck: baseUrl + '/my_check.tml', // 我的考勤
   myFlow: baseUrl + '/my_flow.tml', // 我的流程
-  myHoliday: baseUrl + '/my_holiday.tml' // 我的假期
+  myHoliday: baseUrl + '/my_holiday.tml', // 我的假期
+  myInfo: baseUrl + '/my_info.tml' // 我的信息
 };
 
 const personDetailsApi = {
@@ -28,6 +29,12 @@ const personDetailsApi = {
       url: url.myCheck,
       method: 'post',
       data
+    });
+  },
+  myInfo() {
+    return request({
+      url: url.myInfo,
+      method: 'post'
     });
   }
 };

@@ -75,10 +75,30 @@ export default [{
     path: 'employee_info',
     name: 'employeeInfo',
     component: () =>
-      import('@/views/workCenter/index.vue'),
+      import('@/views/workCenter/employeeInfo/index.vue'),
     meta: {
       title: 'employeeInfo', // 员工基本信息
-      roles: 'base'
+      roles: 'employeeInfo'
+    }
+  },
+  {
+    path: 'employee_add',
+    name: 'employeeAdd',
+    component: () =>
+      import('@/views/workCenter/employeeAdd/index.vue'),
+    meta: {
+      title: 'employeeAdd', // 员工基本信息
+      roles: 'employeeAdd'
+    }
+  },
+  {
+    path: 'roles_manage',
+    name: 'rolesManage',
+    component: () =>
+      import('@/views/workCenter/index.vue'),
+    meta: {
+      title: 'rolesManage', // 权限调整
+      roles: 'rolesManage'
     }
   }
 ];

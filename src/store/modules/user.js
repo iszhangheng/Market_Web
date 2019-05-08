@@ -14,10 +14,14 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    authId: ''
   },
 
   mutations: {
+    SET_AUTHID: (state, authId) => {
+      state.authId = authId;
+    },
     SET_TOKEN: (state, token) => {
       state.token = token;
     },
@@ -39,7 +43,8 @@ const user = {
     }, userInfo) {
       const username = userInfo.username.trim();
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(() => {
+        login(username, userInfo.password).then((response) => {
+          commit('SET_AUTHID', response.robj.authId);
           resolve();
         }).catch(error => {
           reject(error);

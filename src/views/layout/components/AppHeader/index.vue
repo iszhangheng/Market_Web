@@ -1,5 +1,6 @@
 <template>
   <div class="tiny-header">
+    <!-- 头像选择 -->
     <hamburger :toggleClick="toggleSideBar"
       :isActive="sidebar.opened"></hamburger>
     <div v-if="avatar"
@@ -12,12 +13,10 @@
         </div>
         <el-dropdown-menu class="user-dropdown"
           slot="dropdown">
-          <!-- <router-link class="inlineBlock"
-            to="/personal">
-            <el-dropdown-item>
-              {{$t('navbar.personal')}}
-            </el-dropdown-item>
-          </router-link> -->
+          <el-dropdown-item>
+            <span @click="updatePassword"
+              style="display:block;">{{$t('navbar.updatePassword')}}</span>
+          </el-dropdown-item>
           <el-dropdown-item>
             <span @click="logout"
               style="display:block;">{{$t('navbar.logOut')}}</span>
@@ -49,6 +48,9 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         location.reload(); // 为了重新实例化vue-router对象 避免bug
       });
+    },
+    updatePassword() {
+      this.$emit('updatePassword'); // 弹出修改密码窗口
     },
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar');

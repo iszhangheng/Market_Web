@@ -33,7 +33,7 @@ export default [
     path: 'my-info',
     name: 'myInfo',
     component: () =>
-      import('@/views/personalDetail/index.vue'),
+      import('@/views/personalDetail/myInfo/index.vue'),
     meta: {
       title: 'myInfo', // 个人信息
       roles: 'base'

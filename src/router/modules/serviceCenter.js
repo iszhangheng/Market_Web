@@ -1,21 +1,10 @@
-export default [
-  {
+export default [{
     path: 'rest-request',
     name: 'restRequest',
     component: () =>
-      import('@/views/serviceCenter/index.vue'),
+      import('@/views/serviceCenter/restRequest/index.vue'),
     meta: {
       title: 'restRequest', // 休假申请
-      roles: 'base'
-    }
-  },
-  {
-    path: 'cancell-the-leave',
-    name: 'cancellTheLeave',
-    component: () =>
-      import('@/views/personalDetail/index.vue'),
-    meta: {
-      title: 'cancellTheLeave', // 销假申请
       roles: 'base'
     }
   },
@@ -23,9 +12,19 @@ export default [
     path: 'expense-request',
     name: 'expenseRequest',
     component: () =>
-      import('@/views/serviceCenter/index.vue'),
+      import('@/views/serviceCenter/expenseRequest/index.vue'),
     meta: {
       title: 'expenseRequest', // 报销申请
+      roles: 'base'
+    }
+  },
+  {
+    path: 'employee-select',
+    name: 'employeeSelect',
+    component: () =>
+      import('@/views/serviceCenter/employeeSelect/index.vue'),
+    meta: {
+      title: 'employeeSelect', // 查询员工联系方式
       roles: 'base'
     }
   }

@@ -3,6 +3,7 @@ const getters = {
   language: state => state.app.language,
   visitedViews: state => state.tagsView.visitedViews,
   cachedViews: state => state.tagsView.cachedViews,
+  authId: state => state.user.authId,
   token: state => state.user.token,
   avatar: state => state.user.avatar,
   name: state => state.user.name,

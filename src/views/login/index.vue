@@ -80,7 +80,7 @@ export default {
           this.$store
             .dispatch('Login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: 'dashboard' });
+              this.$router.push({ path: '/' });
               this.loading = false;
             })
             .catch(() => {

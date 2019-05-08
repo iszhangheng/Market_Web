@@ -49,7 +49,7 @@ export default {
   },
   navbar: {
     logOut: 'Log Out',
-    personal: 'Personal'
+    updatePassword: 'Update Password'
   },
   login: {
     title: 'TinyWeb Admin',

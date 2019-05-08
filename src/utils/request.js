@@ -51,15 +51,13 @@ service.interceptors.response.use(
       }
       if (res.rcode === '999998') {
         Message({
-          message: res.msg,
+          message: res.message,
           type: 'error',
           duration: 5 * 1000
         });
       }
-      // return Promise.reject('error');
     } else {
-      // setToken(response.headers['x-token']);
-      setToken('admin_token');
+      setToken(response.headers['x-token']);
       return response.data;
     }
   },

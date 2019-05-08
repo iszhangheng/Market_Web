@@ -19,6 +19,7 @@
           type="daterange"
           align="center"
           unlink-panels
+          change="computeSumDay"
           :start-placeholder="this.$t('date.start')"
           :end-placeholder="this.$t('date.end')"
           :default-time="['00:00:00', '23:59:59']"
@@ -68,14 +69,12 @@
       :page-sizes="[10, 20, 40]"
       :current-page="currentPage">
     </el-pagination>
-    <!-- 弹窗走向详情 -->
+    <!-- 修改员工信息 -->
     <el-dialog :title="urlTitle"
       top="10vh"
       :visible.sync="visibleShow"
       width="80%">
-      <table-form v-if="visibleShow"
-        :url="appUrl"
-        :name="towardsName"></table-form>
+      
       <div slot="footer"
         class="dialog-footer">
         <el-button size="small"

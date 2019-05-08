@@ -1,23 +1,17 @@
 <template>
   <div class="tiny-container">
-    <h3 class="page-title">我的考勤</h3>
+    <h3 class="page-title">员工信息</h3>
     <!-- 功能模块 -->
     <el-form class="search-form"
       :inline="true"
       size="mini">
-      <!-- 考勤状态赛选 -->
-      <el-form-item :label="this.$t('myCheck.checkState')"
+      <!-- 请求名称或URL -->
+      <el-form-item :label="this.$t('employeeInfo.name')"
         prop="name">
-        <el-select v-model="value"
-          placeholder="请选择">
-          <el-option v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <el-input v-model="name"
+          :placeholder="this.$t('employeeInfo.requestName')"
+          clearable></el-input>
       </el-form-item>
-      <!-- 筛选条件 -->
       <!-- 查询按钮 -->
       <el-form-item label="">
         <el-button @click="query()"
@@ -52,61 +46,32 @@
 </template>
 
 <script>
-import personDetailsApi from '@/api/personDetails';
+import workCenterApi from '@/api/workCenter';
+
 export default {
-  name: 'WorkLog',
+  name: 'employeeInfo',
   data() {
     return {
+      name: '',
       listLoading: false, // 加载动画开关
       total: 0, // 返回的表格数据总条数
       list: [], // 表格数据
       currentPage: 1, // 当前页码
-      pageSize: 10, // 页面大小
-      productName: '', // 商品名查询
-      options: [
-        {
-          value: 'one',
-          label: '迟到'
-        },
-        {
-          value: 'two',
-          label: '早退'
-        },
-        {
-          value: 'three',
-          label: '未打卡'
-        }
-      ],
-      value: ''
+      pageSize: 10 // 页面大小
     };
   },
   computed: {
     columns() {
       return [
         {
-          name: '日期',
+          name: '姓名',
           align: 'center',
-          prop: 'logDate'
+          prop: 'name'
         },
         {
-          name: '上班打卡时间',
+          name: '电话',
           align: 'center',
-          prop: 'inWorkDate'
-        },
-        {
-          name: '上班状态',
-          align: 'center',
-          prop: 'inState'
-        },
-        {
-          name: '下班打卡时间',
-          align: 'center',
-          prop: 'outWorkDate'
-        },
-        {
-          name: '下班状态',
-          align: 'center',
-          prop: 'outState'
+          prop: 'phone'
         }
       ];
     }
@@ -115,12 +80,16 @@ export default {
     this.init();
   },
   methods: {
+    // 查询表格信息
     init() {
-      // 查询表格信息
       this.listLoading = true;
-      const data = {};
-      personDetailsApi
-        .myCheck(data)
+      const data = {
+        pageSize: this.pageSize,
+        pageNo: (this.currentPage - 1) * this.pageSize,
+        name: this.name
+      };
+      workCenterApi
+        .employeeInfo(data)
         .then(res => {
           this.total = res.robj.total;
           this.list = res.robj.items;
@@ -131,10 +100,12 @@ export default {
           this.listLoading = false;
         });
     },
+    // 发送请求
     query() {
       this.currentPage = 1;
       this.init();
     },
+    // 调整页面大小
     handleCurrentChange(val) {
       this.currentPage = val;
       this.init();
