@@ -16,7 +16,8 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="电话">
-              <el-input v-model="employeeInfo.phone" disabled="true"></el-input>
+              <el-input v-model="employeeInfo.phone"
+                disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -24,38 +25,24 @@
           <el-col :span="4">&nbsp;</el-col>
           <el-col :span="6">
             <el-form-item label="姓名">
-              <el-input v-model="employeeInfo.name" disabled="true"></el-input>
+              <el-input v-model="employeeInfo.name"
+                disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="性别">
-              <el-input v-model="employeeInfo.sex" disabled="true"></el-input>
+              <el-input v-model="employeeInfo.sex"
+                disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="4">&nbsp;</el-col>
-          <el-col :span="6">
-            <el-form-item label="民族">
-              <el-input v-model="employeeInfo.nation" disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="籍贯">
-              <el-input v-model="employeeInfo.nativePlace" disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+
         <el-row>
           <el-col :span="4">&nbsp;</el-col>
           <el-col :span="6">
             <el-form-item label="身份证号">
-              <el-input v-model="employeeInfo.idCard" disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="住址">
-              <el-input v-model="employeeInfo.address" disabled="true"></el-input>
+              <el-input v-model="employeeInfo.idCard"
+                disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -63,25 +50,14 @@
           <el-col :span="4">&nbsp;</el-col>
           <el-col :span="6">
             <el-form-item label="部门">
-              <el-input v-model="employeeInfo.deptName" disabled="true"></el-input>
+              <el-input v-model="employeeInfo.deptName"
+                disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="岗位">
-              <el-input v-model="employeeInfo.postName" disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="4">&nbsp;</el-col>
-          <el-col :span="6">
-            <el-form-item label="出生日期">
-              <el-input v-model="employeeInfo.dateBirth" disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="文化程度">
-              <el-input v-model="employeeInfo.degree" disabled="true"></el-input>
+              <el-input v-model="employeeInfo.postName"
+                disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>

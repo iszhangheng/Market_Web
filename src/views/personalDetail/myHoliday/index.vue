@@ -1,19 +1,22 @@
 <template>
   <div class="tiny-container">
-    <h3 class="page-title">我的休假</h3>
+    <h3 class="page-title">我的流程</h3>
     <!-- 功能模块 -->
     <el-form class="search-form"
       :inline="true"
       size="mini">
-      <!-- 休假类型赛选 -->
-      <el-form-item :label="this.$t('myHoliday.holidayType')"
+      <!-- 流程名赛选 -->
+      <el-form-item :label="this.$t('myHoliday.restType')"
         prop="name">
-        <el-input v-model="productName"
-          @keyup.enter.native="query()"
-          :placeholder="this.$t('myHoliday.holidayType')"
-          clearable></el-input>
+        <el-select v-model="restType"
+          placeholder="请选择">
+          <el-option v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
-      <!-- 筛选条件 -->
       <!-- 查询按钮 -->
       <el-form-item label="">
         <el-button @click="query()"
@@ -57,6 +60,8 @@
 
 <script>
 import personDetailsApi from '@/api/personDetails';
+import { restTypeList } from '@/utils/baseTools';
+import store from '@/store';
 export default {
   name: 'productDetails',
   data() {
@@ -66,24 +71,25 @@ export default {
       list: [], // 表格数据
       currentPage: 1, // 当前页码
       pageSize: 10, // 页面大小
-      productName: '' // 商品名查询
+      restType: '', // 休假类型
+      options: restTypeList
     };
   },
   computed: {
     columns() {
       return [
         {
-          name: '请假类型',
+          name: '请休假类型',
           align: 'center',
-          prop: 'holidayType'
+          prop: 'restType'
         },
         {
-          name: '请假时间',
+          name: '请休假时间',
           align: 'center',
-          prop: 'date'
+          prop: 'time'
         },
         {
-          name: '请假天数',
+          name: '天数',
           align: 'center',
           prop: 'sumDay'
         },
@@ -102,7 +108,12 @@ export default {
     init() {
       // 查询表格信息
       this.listLoading = true;
-      const data = {};
+      const data = {
+        restType: this.restType,
+        pageNo: (this.currentPage - 1) * this.pageSize,
+        pageSize: this.pageSize,
+        employeeId: store.getters.authId
+      };
       personDetailsApi
         .myHoliday(data)
         .then(res => {

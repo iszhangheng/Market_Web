@@ -10,6 +10,7 @@ export default {
     outStorageRequest: '销售申请',
     indentRequest: '订单查询',
     productBadRequest: '商品损毁报告',
+    flowCheck: '流程审批',
     employeeInfo: '员工信息',
     employeeAdd: '员工添加',
     // 服务中心模块
@@ -48,14 +49,14 @@ export default {
   employeeSelect: {
 
   },
-  // 流程流程
+  // 我的流程
   myFlow: {
     flowName: '流程名称'
   },
   // 我的休假
   myHoliday: {
     pageTitle: '我的休假',
-    holidayType: '休假类型'
+    restType: '休假类型'
   },
   // 我的考勤
   myCheck: {

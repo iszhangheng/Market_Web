@@ -9,38 +9,44 @@
         <el-col :span="3">&nbsp;</el-col>
         <el-col :span="8">
           <el-form-item label="员工编号">
-            <el-input v-model="employeeInfo.employeeId"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="电话">
-            <el-input v-model="employeeInfo.phone"></el-input>
+            <el-input v-model="employeeInfo.employeeId"
+              disabled="true"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">&nbsp;</el-col>
-        <el-col :span="8">
+        <el-col :span="4">
           <el-form-item label="姓名">
             <el-input v-model="employeeInfo.name"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="4">
           <el-form-item label="性别">
-            <el-input v-model="employeeInfo.sex"></el-input>
+            <el-select v-model="employeeInfo.sex">
+              <el-option label="男"
+                value="男"></el-option>
+              <el-option label="女"
+                value="女"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">&nbsp;</el-col>
         <el-col :span="8">
-          <el-form-item label="民族">
-            <el-input v-model="employeeInfo.nation"></el-input>
+          <el-form-item label="部门/岗位">
+            <el-cascader :options="deptPost"
+              v-model="selectedOptions">
+            </el-cascader>
           </el-form-item>
         </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3">&nbsp;</el-col>
         <el-col :span="8">
-          <el-form-item label="籍贯">
-            <el-input v-model="employeeInfo.nativePlace"></el-input>
+          <el-form-item label="电话">
+            <el-input v-model="employeeInfo.phone"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -51,43 +57,11 @@
             <el-input v-model="employeeInfo.idCard"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="住址">
-            <el-input v-model="employeeInfo.address"></el-input>
-          </el-form-item>
-        </el-col>
       </el-row>
       <el-row>
-        <el-col :span="3">&nbsp;</el-col>
-        <el-col :span="8">
-          <el-form-item label="部门">
-            <el-input v-model="employeeInfo.deptName"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="岗位">
-            <el-input v-model="employeeInfo.postName"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3">&nbsp;</el-col>
-        <el-col :span="8">
-          <el-form-item label="出生日期">
-            <el-input v-model="employeeInfo.dateBirth"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="文化程度">
-            <el-input v-model="employeeInfo.degree"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">&nbsp;</el-col>
+        <el-col :span="8">&nbsp;</el-col>
         <el-col :span="8">
           <el-form-item>
-            <el-button>取消</el-button>
             <el-button type="primary"
               @click="onSubmit">创建</el-button>
           </el-form-item>
@@ -97,25 +71,51 @@
   </div>
 </template>
 <script>
+import { deptPostList } from '@/utils/baseTools';
 export default {
-  props: ['employeeInfo'],
   data() {
-    return {};
+    return {
+      selectedOptions: [],
+      deptPost: deptPostList,
+      employeeInfo: {
+        employeeId: '',
+        name: '',
+        sex: '',
+        phone: '',
+        idCard: ''
+      }
+    };
+  },
+  mounted() {
+    this.initForm();
   },
   methods: {
-    getUrl() {
+    onSubmit() {
+      this.onSubmit();
+    },
+    addEmployeeInfo() {
       const data = {
-        pageType: 'APP'
+        employeeId: this.employeeInfo.employeeId,
+        name: this.employeeInfo.name,
+        sex: this.employeeInfo.sex,
+        phone: this.employeeInfo.phone,
+        idCard: this.employeeInfo.idCard,
+        dept: this.selectedOptions[0],
+        post: this.selectedOptions[1]
       };
-      dictionaryApi
-        .pageList(data)
-        .then(res => {
-          this.options = res.robj.items;
-          this.initTableData();
-        })
-        .catch(res => {
-          this.$message.error('数据请求失败');
-        });
+      console.log(data);
+      // dictionaryApi
+      //   .pageList(data)
+      //   .then(res => {
+      //     this.options = res.robj.items;
+      //     this.initTableData();
+      //   })
+      //   .catch(res => {
+      //     this.$message.error('数据请求失败');
+      //   });
+    },
+    initForm() {
+      this.employeeInfo.employeeId = new Date().getTime();
     }
   }
 };

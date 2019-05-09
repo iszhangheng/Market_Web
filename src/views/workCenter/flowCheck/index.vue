@@ -1,6 +1,6 @@
 <template>
   <div class="tiny-container">
-    <h3 class="page-title">我的流程</h3>
+    <h3 class="page-title">流程审批</h3>
     <!-- 功能模块 -->
     <el-form class="search-form"
       :inline="true"
@@ -13,21 +13,12 @@
           :placeholder="this.$t('myFlow.flowName')"
           clearable></el-input>
       </el-form-item>
-      <!-- 筛选条件 -->
       <!-- 查询按钮 -->
       <el-form-item label="">
         <el-button @click="query()"
           type="primary"
           icon="el-icon-search">{{this.$t('table.query')}}</el-button>
       </el-form-item>
-      <!-- 导出模块 -->
-      <!-- <el-form-item label="">
-        <export-excel id="test"
-          ref="exportExcelChild"
-          :columns='columns'
-          :list='listExcel'
-          @initExcelList='initExcelList'></export-excel>
-      </el-form-item> -->
     </el-form>
     <!-- 表格展示模块 -->
     <egrid v-loading.body="listLoading"
@@ -58,16 +49,6 @@
       top="10vh"
       :visible.sync="visibleEmShow"
       width="80%">
-      <egrid v-loading.body="visibleEmShow"
-        element-loading-text="Loading"
-        border
-        fit
-        highlight-current-row
-        :column-type="['index']"
-        :column-key-map="{ label: 'name' }"
-        :data="logList"
-        :columns="logColumns">
-      </egrid>
       <div slot="footer"
         class="dialog-footer">
         <el-button size="small"
@@ -79,15 +60,15 @@
 </template>
 
 <script>
-import tableForm from '@/components/TableForm/EmployeeInfo/tableForm';
-import columnTowards from '@/views/workCenter/employeeInfo/_components/columnTowards';
+import columnTowards from './_components/columnTowards';
+import columnLineChart from './_components/columnLineChart';
 import personDetailsApi from '@/api/personDetails';
 import store from '@/store';
 export default {
   name: 'productDetails',
-  components: {
-    tableForm
-  },
+  // components: {
+  //   tableForm
+  // },
   data() {
     return {
       listLoading: false, // 加载动画开关
@@ -119,16 +100,6 @@ export default {
           prop: 'employeeName'
         },
         {
-          name: '当前步骤',
-          align: 'center',
-          prop: 'currentStep'
-        },
-        {
-          name: '当前办理人岗位',
-          align: 'center',
-          prop: 'postName'
-        },
-        {
           name: '申请时间',
           align: 'center',
           prop: 'requestDate'
@@ -137,30 +108,6 @@ export default {
           name: '流程名称',
           align: 'center',
           prop: 'flowName'
-        }
-      ];
-    },
-    logColumns() {
-      return [
-        {
-          name: '办理环节',
-          align: 'center',
-          prop: 'temp'
-        },
-        {
-          name: '办理人',
-          align: 'center',
-          prop: 'name'
-        },
-        {
-          name: '办理意见',
-          align: 'center',
-          prop: 'idea'
-        },
-        {
-          name: '办理时间',
-          align: 'center',
-          prop: 'date'
         }
       ];
     }
@@ -199,27 +146,41 @@ export default {
       this.pageSize = val;
       this.init();
     },
-    // 更新员工信息
     update(row) {
       this.getLogList(row);
       this.visibleEmShow = true;
     },
+    getMsg() {},
     // 右侧功能栏
     columnsHandler(cols) {
       const that = this;
-      return cols.concat({
-        width: 80,
-        fixed: 'right',
-        label: '日志',
-        align: 'center',
-        component: columnTowards,
-        // listeners 可用于监听自定义组件内部 $emit 出的事件
-        listeners: {
-          'get-table'(row) {
-            that.update(row);
+      return cols.concat(
+        {
+          width: 80,
+          fixed: 'right',
+          label: '详情',
+          align: 'center',
+          component: columnTowards,
+          // listeners 可用于监听自定义组件内部 $emit 出的事件
+          listeners: {
+            'get-table'(row) {
+              that.update(row);
+            }
+          }
+        },
+        {
+          width: 80,
+          fixed: 'right',
+          label: '审批',
+          align: 'center',
+          component: columnLineChart,
+          listeners: {
+            'get-msg'(row) {
+              that.getMsg(row);
+            }
           }
         }
-      });
+      );
     },
     getLogList(row) {
       const data = {

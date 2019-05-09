@@ -28,6 +28,7 @@
 </template>
 <script>
 import columnStyle from './_components/columnStyle';
+
 import appApi from '@/api/app';
 
 export default {

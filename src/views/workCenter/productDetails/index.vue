@@ -35,6 +35,7 @@
       border
       fit
       highlight-current-row
+      :columns-handler="columnsHandler"
       :column-type="['index']"
       :column-key-map="{ label: 'name' }"
       :data="list"
@@ -52,18 +53,84 @@
       :page-sizes="[10, 20, 40]"
       :current-page="currentPage">
     </el-pagination>
+    <!-- 弹窗趋势图 -->
+    <el-dialog title="销售记录"
+      top="10vh"
+      :visible.sync="visibleShowChart"
+      width="80%">
+      <line-chart v-if="visibleShowChart"
+        :productId="productId"></line-chart>
+      <div slot="footer"
+        class="dialog-footer">
+        <el-button size="small"
+          @click="visibleShowChart=false"
+          type="primary">{{this.$t('table.confirm')}}</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import workCenterApi from '@/api/workCenter';
+import columnTowards from './_components/columnTowards';
+import lineChart from './_components/lineChart';
 export default {
   name: 'productDetails',
+  components: {
+    lineChart
+  },
   data() {
     return {
       listLoading: false, // 加载动画开关
       total: 0, // 返回的表格数据总条数
-      list: [], // 表格数据
+      visibleShowChart: false,
+      productId: '',
+      list: [
+        {
+          productId: '1648613486',
+          productType: '食品',
+          productName: '娃哈哈',
+          unitPrice: '25',
+          unit: '盒',
+          sellNum: '10',
+          keepNum: '50',
+          discount: '_',
+          expirationDate: '2019-05-09'
+        },
+        {
+          productId: '1648613487',
+          productType: '食品',
+          productName: '橘子',
+          unitPrice: '12',
+          unit: '斤',
+          sellNum: '18',
+          keepNum: '60',
+          discount: '_',
+          expirationDate: '2019-05-09'
+        },
+        {
+          productId: '1648613488',
+          productType: '食品',
+          productName: '苹果',
+          unitPrice: '19',
+          unit: '斤',
+          sellNum: '19.5',
+          keepNum: '62',
+          discount: '_',
+          expirationDate: '2019-05-09'
+        },
+        {
+          productId: '1648613489',
+          productType: '食品',
+          productName: '香蕉',
+          unitPrice: '25',
+          unit: '斤',
+          sellNum: '10',
+          keepNum: '50',
+          discount: '_',
+          expirationDate: '2019-05-09'
+        }
+      ], // 表格数据
       currentPage: 1, // 当前页码
       pageSize: 10, // 页面大小
       productName: '' // 商品名查询
@@ -72,11 +139,6 @@ export default {
   computed: {
     columns() {
       return [
-        {
-          name: '商品编号',
-          align: 'center',
-          prop: 'productId'
-        },
         {
           name: '类别',
           align: 'center',
@@ -121,7 +183,7 @@ export default {
     }
   },
   mounted() {
-    this.init();
+    // this.init();
   },
   methods: {
     init() {
@@ -151,6 +213,26 @@ export default {
     handleSizeChange(val) {
       this.pageSize = val;
       this.init();
+    },
+    update(row) {
+      this.visibleShowChart = true;
+    },
+    // 右侧功能栏
+    columnsHandler(cols) {
+      const that = this;
+      return cols.concat({
+        width: 80,
+        fixed: 'right',
+        label: '趋势',
+        align: 'center',
+        component: columnTowards,
+        // listeners 可用于监听自定义组件内部 $emit 出的事件
+        listeners: {
+          'get-table'(row) {
+            that.update(row);
+          }
+        }
+      });
     }
   }
 };

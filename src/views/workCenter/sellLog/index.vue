@@ -42,6 +42,7 @@
       border
       fit
       highlight-current-row
+      :columns-handler="columnsHandler"
       :column-type="['index']"
       :column-key-map="{ label: 'name' }"
       :data="list"
@@ -59,15 +60,35 @@
       :page-sizes="[10, 20, 40]"
       :current-page="currentPage">
     </el-pagination>
+    <!-- 弹窗趋势图 -->
+    <el-dialog title="销售记录"
+      top="10vh"
+      :visible.sync="visibleShowChart"
+      width="80%">
+      <line-chart v-if="visibleShowChart"
+        :productId="productId"></line-chart>
+      <div slot="footer"
+        class="dialog-footer">
+        <el-button size="small"
+          @click="visibleShowChart=false"
+          type="primary">{{this.$t('table.confirm')}}</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import workCenterApi from '@/api/workCenter';
+import columnTowards from './_components/columnTowards';
+import lineChart from './_components/lineChart';
 export default {
   name: 'sellLog',
+  components: {
+    lineChart
+  },
   data() {
     return {
+      visibleShowChart: false,
       listLoading: false, // 加载动画开关
       total: 4, // 返回的表格数据总条数
       list: [
@@ -75,7 +96,7 @@ export default {
           sellId: '1235645678',
           productId: '1254682313',
           productName: '牙膏',
-          sellPrice: '售价',
+          sellPrice: '25.6',
           unit: '管',
           num: '10',
           discount: '_',
@@ -85,7 +106,7 @@ export default {
           sellId: '1235645679',
           productId: '1254682314',
           productName: '牙刷',
-          sellPrice: '12',
+          sellPrice: '12.5',
           unit: '支',
           num: '10',
           discount: '_',
@@ -121,11 +142,6 @@ export default {
     columns() {
       return [
         {
-          name: '销售单号',
-          align: 'center',
-          prop: 'sellId'
-        },
-        {
           name: '商品编号',
           align: 'center',
           prop: 'productId'
@@ -136,7 +152,7 @@ export default {
           prop: 'productName'
         },
         {
-          name: '售价',
+          name: '平均价',
           align: 'center',
           prop: 'sellPrice'
         },
@@ -151,11 +167,6 @@ export default {
           prop: 'num'
         },
         {
-          name: '折扣',
-          align: 'center',
-          prop: 'discount'
-        },
-        {
           name: '时间',
           align: 'center',
           prop: 'sellDate'
@@ -164,7 +175,7 @@ export default {
     }
   },
   mounted() {
-    this.init();
+    // this.init();
   },
   methods: {
     init() {
@@ -194,6 +205,26 @@ export default {
     handleSizeChange(val) {
       this.pageSize = val;
       this.init();
+    },
+    update(row) {
+      this.visibleShowChart = true;
+    },
+    // 右侧功能栏
+    columnsHandler(cols) {
+      const that = this;
+      return cols.concat({
+        width: 80,
+        fixed: 'right',
+        label: '趋势',
+        align: 'center',
+        component: columnTowards,
+        // listeners 可用于监听自定义组件内部 $emit 出的事件
+        listeners: {
+          'get-table'(row) {
+            that.update(row);
+          }
+        }
+      });
     }
   }
 };

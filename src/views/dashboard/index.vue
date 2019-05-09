@@ -1,12 +1,12 @@
 <template>
   <div class="dashboard-content">
-    <h2>移动应用统计分析</h2>
-    <p>帮助移动开发者收集、处理、分析第一方数据。<br />透析全面运营指标，掌握用户行为，改善产品设计</p>
+    <h2>商场综合管理系统</h2>
+    <p>帮助商场管理者方便，快捷，有效的管理企业。<br />透析全面销售信息，掌握客户购买倾向，改善商场经营</p>
     <b><img src="./../../assets/images/pic-weApp.png" /></b>
     <ul>
-      <li>行为分析</li>
-      <li>性能分析</li>
-      <li>字典管理</li>
+      <li>员工管理</li>
+      <li>商品管理</li>
+      <li>销售分析</li>
     </ul>
   </div>
 </template>

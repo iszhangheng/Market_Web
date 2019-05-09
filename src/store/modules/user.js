@@ -15,12 +15,16 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    authId: ''
+    authId: '',
+    deptName: ''
   },
 
   mutations: {
     SET_AUTHID: (state, authId) => {
       state.authId = authId;
+    },
+    SET_DEPTNAME: (state, deptName) => {
+      state.deptName = deptName;
     },
     SET_TOKEN: (state, token) => {
       state.token = token;
@@ -44,7 +48,6 @@ const user = {
       const username = userInfo.username.trim();
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then((response) => {
-          commit('SET_AUTHID', response.robj.authId);
           resolve();
         }).catch(error => {
           reject(error);
@@ -61,6 +64,8 @@ const user = {
           const data = response.robj;
           commit('SET_ROLES', data.roles);
           commit('SET_NAME', data.name);
+          commit('SET_AUTHID', data.employeeId);
+          commit('SET_DEPTNAME', data.deptName);
           commit('SET_AVATAR', data.avatar || 'https://gitee.com/uploads/57/302857_webcjs.png');
           resolve(response);
         }).catch(error => {

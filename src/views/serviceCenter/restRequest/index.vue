@@ -121,6 +121,7 @@
 
 <script>
 import serviceCenterApi from '@/api/serviceCenter';
+import store from '@/store';
 export default {
   name: 'pageAccess',
   data() {
@@ -173,14 +174,15 @@ export default {
       const data = {
         formId: this.form.formId,
         requestDate: this.form.requestDate,
-        employeeId: this.form.employeeName,
+        employeeId: store.getters.authId,
+        employeeName: this.form.employeeName,
         deptName: this.form.deptName,
         formTitle: this.form.formTitle,
         replaceName: this.form.replaceName,
         phone: this.form.phone,
         remark: this.form.remark,
-        startDate: this.form.date[0],
-        endDate: this.form.date[1],
+        startDate: this.form.date[0] + '',
+        endDate: this.form.date[1] + '',
         restType: this.form.restType,
         state: '待审批'
       };
@@ -215,15 +217,16 @@ export default {
       var myDate = new Date();
       this.form.formId = 'QXJ' + myDate.getTime();
       this.form.requestDate = this.myFormatDate(myDate);
-      this.form.employeeName = '张三';
-      this.form.deptName = '销售部';
-      this.form.formTitle = '张三' + '的请假流程';
+      this.form.employeeName = store.getters.name;
+      this.form.deptName = store.getters.deptName;
+      this.form.formTitle = store.getters.name + '的请假流程';
       this.form.replaceName = '';
       this.form.phone = '';
       this.form.remark = '';
       this.form.sumDay = 1;
+      this.form.restType = '事假';
       this.form.date = [
-        new Date(),
+        new Date().setTime(new Date()),
         new Date().setTime(new Date().getTime() + 3600 * 1000 * 24 * 1)
       ];
     },
