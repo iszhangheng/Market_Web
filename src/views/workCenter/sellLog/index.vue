@@ -6,11 +6,18 @@
       :inline="true"
       size="mini">
       <!-- 请求名称或URL -->
-      <el-form-item :label="this.$t('sellLog.sellDate')"
-        prop="name">
-        <el-date-picker v-model="value1"
-          type="date"
-          placeholder="选择日期">
+      <!-- 时间查询 -->
+      <el-form-item prop="name"
+        :label="this.$t('date.label')">
+        <el-date-picker v-model="date"
+          type="daterange"
+          align="center"
+          unlink-panels
+          change="computeSumDay"
+          :start-placeholder="this.$t('date.start')"
+          :end-placeholder="this.$t('date.end')"
+          :default-time="['00:00:00', '23:59:59']"
+          value-format="timestamp">
         </el-date-picker>
       </el-form-item>
       <el-form-item :label="this.$t('sellLog.productName')"
@@ -20,21 +27,12 @@
           :placeholder="this.$t('sellLog.request')"
           clearable></el-input>
       </el-form-item>
-      <!-- 筛选条件 -->
       <!-- 查询按钮 -->
       <el-form-item label="">
         <el-button @click="query()"
           type="primary"
           icon="el-icon-search">{{this.$t('table.query')}}</el-button>
       </el-form-item>
-      <!-- 导出模块 -->
-      <!-- <el-form-item label="">
-        <export-excel id="test"
-          ref="exportExcelChild"
-          :columns='columns'
-          :list='listExcel'
-          @initExcelList='initExcelList'></export-excel>
-      </el-form-item> -->
     </el-form>
     <!-- 表格展示模块 -->
     <egrid v-loading.body="listLoading"
@@ -66,7 +64,7 @@
       :visible.sync="visibleShowChart"
       width="80%">
       <line-chart v-if="visibleShowChart"
-        :productId="productId"></line-chart>
+        :productName="lineName"></line-chart>
       <div slot="footer"
         class="dialog-footer">
         <el-button size="small"
@@ -88,52 +86,13 @@ export default {
   },
   data() {
     return {
+      date: [],
       visibleShowChart: false,
       listLoading: false, // 加载动画开关
       total: 4, // 返回的表格数据总条数
-      list: [
-        {
-          sellId: '1235645678',
-          productId: '1254682313',
-          productName: '牙膏',
-          sellPrice: '25.6',
-          unit: '管',
-          num: '10',
-          discount: '_',
-          sellDate: '2019-05-08'
-        },
-        {
-          sellId: '1235645679',
-          productId: '1254682314',
-          productName: '牙刷',
-          sellPrice: '12.5',
-          unit: '支',
-          num: '10',
-          discount: '_',
-          sellDate: '2019-05-08'
-        },
-        {
-          sellId: '1235645680',
-          productId: '1254682315',
-          productName: '奶糖',
-          sellPrice: '100',
-          unit: '盒',
-          num: '10',
-          discount: '_',
-          sellDate: '2019-05-08'
-        },
-        {
-          sellId: '1235645681',
-          productId: '12546823145',
-          productName: '雪糕',
-          sellPrice: '3',
-          unit: '块',
-          num: '10',
-          discount: '_',
-          sellDate: '2019-05-08'
-        }
-      ], // 表格数据
+      list: [], // 表格数据
       currentPage: 1, // 当前页码
+      lineName: '',
       pageSize: 10, // 页面大小
       productName: '' // 商品名查询
     };
@@ -142,11 +101,6 @@ export default {
     columns() {
       return [
         {
-          name: '商品编号',
-          align: 'center',
-          prop: 'productId'
-        },
-        {
           name: '商品名称',
           align: 'center',
           prop: 'productName'
@@ -154,7 +108,7 @@ export default {
         {
           name: '平均价',
           align: 'center',
-          prop: 'sellPrice'
+          prop: 'avgPrice'
         },
         {
           name: '单位',
@@ -164,26 +118,32 @@ export default {
         {
           name: '数量',
           align: 'center',
-          prop: 'num'
+          prop: 'count'
         },
         {
-          name: '时间',
+          name: '金额',
           align: 'center',
-          prop: 'sellDate'
+          prop: 'sumMoney'
         }
       ];
     }
   },
   mounted() {
-    // this.init();
+    this.init();
   },
   methods: {
     init() {
       // 查询表格信息
       this.listLoading = true;
-      const data = {};
+      const data = {
+        productName: this.productName,
+        startDate: this.date !== null ? this.date[0] : '',
+        endDate: this.date !== null ? this.date[1] : '',
+        pageNo: (this.currentPage - 1) * this.pageSize,
+        pageSize: this.pageSize
+      };
       workCenterApi
-        .sellLog(data)
+        .getProductSellList(data)
         .then(res => {
           this.total = res.robj.total;
           this.list = res.robj.items;
@@ -207,6 +167,7 @@ export default {
       this.init();
     },
     update(row) {
+      this.lineName = row.productName;
       this.visibleShowChart = true;
     },
     // 右侧功能栏
@@ -218,13 +179,20 @@ export default {
         label: '趋势',
         align: 'center',
         component: columnTowards,
-        // listeners 可用于监听自定义组件内部 $emit 出的事件
         listeners: {
           'get-table'(row) {
             that.update(row);
           }
         }
       });
+    },
+    myFormatDate(date) {
+      var strDate = date.getFullYear() + '-';
+      const month = date.getMonth() + 1;
+      strDate += (month < 10 ? '0' + month : month) + '-';
+      const day = date.getDate();
+      strDate += day < 10 ? '0' + day : day;
+      return strDate;
     }
   }
 };

@@ -20,14 +20,6 @@
           type="primary"
           icon="el-icon-search">{{this.$t('table.query')}}</el-button>
       </el-form-item>
-      <!-- 导出模块 -->
-      <!-- <el-form-item label="">
-        <export-excel id="test"
-          ref="exportExcelChild"
-          :columns='columns'
-          :list='listExcel'
-          @initExcelList='initExcelList'></export-excel>
-      </el-form-item> -->
     </el-form>
     <!-- 表格展示模块 -->
     <egrid v-loading.body="listLoading"
@@ -59,7 +51,7 @@
       :visible.sync="visibleShowChart"
       width="80%">
       <line-chart v-if="visibleShowChart"
-        :productId="productId"></line-chart>
+        :productName="lineName"></line-chart>
       <div slot="footer"
         class="dialog-footer">
         <el-button size="small"
@@ -84,53 +76,8 @@ export default {
       listLoading: false, // 加载动画开关
       total: 0, // 返回的表格数据总条数
       visibleShowChart: false,
-      productId: '',
-      list: [
-        {
-          productId: '1648613486',
-          productType: '食品',
-          productName: '娃哈哈',
-          unitPrice: '25',
-          unit: '盒',
-          sellNum: '10',
-          keepNum: '50',
-          discount: '_',
-          expirationDate: '2019-05-09'
-        },
-        {
-          productId: '1648613487',
-          productType: '食品',
-          productName: '橘子',
-          unitPrice: '12',
-          unit: '斤',
-          sellNum: '18',
-          keepNum: '60',
-          discount: '_',
-          expirationDate: '2019-05-09'
-        },
-        {
-          productId: '1648613488',
-          productType: '食品',
-          productName: '苹果',
-          unitPrice: '19',
-          unit: '斤',
-          sellNum: '19.5',
-          keepNum: '62',
-          discount: '_',
-          expirationDate: '2019-05-09'
-        },
-        {
-          productId: '1648613489',
-          productType: '食品',
-          productName: '香蕉',
-          unitPrice: '25',
-          unit: '斤',
-          sellNum: '10',
-          keepNum: '50',
-          discount: '_',
-          expirationDate: '2019-05-09'
-        }
-      ], // 表格数据
+      lineName: '',
+      list: '',
       currentPage: 1, // 当前页码
       pageSize: 10, // 页面大小
       productName: '' // 商品名查询
@@ -162,12 +109,12 @@ export default {
         {
           name: '销售量',
           align: 'center',
-          prop: 'sellNum'
+          prop: 'sellCount'
         },
         {
           name: '库存量',
           align: 'center',
-          prop: 'keepNum'
+          prop: 'num'
         },
         {
           name: '折扣',
@@ -183,15 +130,19 @@ export default {
     }
   },
   mounted() {
-    // this.init();
+    this.init();
   },
   methods: {
     init() {
       // 查询表格信息
       this.listLoading = true;
-      const data = {};
+      const data = {
+        productName: this.productName,
+        pageNo: (this.currentPage - 1) * this.pageSize,
+        pageSize: this.pageSize
+      };
       workCenterApi
-        .productDetails(data)
+        .getProductList(data)
         .then(res => {
           this.total = res.robj.total;
           this.list = res.robj.items;
@@ -215,6 +166,7 @@ export default {
       this.init();
     },
     update(row) {
+      this.lineName = row.productId;
       this.visibleShowChart = true;
     },
     // 右侧功能栏

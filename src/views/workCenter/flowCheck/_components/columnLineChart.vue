@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     clickTo() {
-      this.$emit('get-table', this.row);
+      this.$emit('get-check', this.row);
     }
   }
 };

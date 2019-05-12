@@ -8,26 +8,16 @@
       <!-- 流程名赛选 -->
       <el-form-item :label="this.$t('myFlow.flowName')"
         prop="name">
-        <el-input v-model="productName"
-          @keyup.enter.native="query()"
+        <el-input v-model="flowName"
           :placeholder="this.$t('myFlow.flowName')"
           clearable></el-input>
       </el-form-item>
-      <!-- 筛选条件 -->
       <!-- 查询按钮 -->
       <el-form-item label="">
         <el-button @click="query()"
           type="primary"
           icon="el-icon-search">{{this.$t('table.query')}}</el-button>
       </el-form-item>
-      <!-- 导出模块 -->
-      <!-- <el-form-item label="">
-        <export-excel id="test"
-          ref="exportExcelChild"
-          :columns='columns'
-          :list='listExcel'
-          @initExcelList='initExcelList'></export-excel>
-      </el-form-item> -->
     </el-form>
     <!-- 表格展示模块 -->
     <egrid v-loading.body="listLoading"
@@ -53,8 +43,7 @@
       :page-sizes="[10, 20, 40]"
       :current-page="currentPage">
     </el-pagination>
-    <!-- 弹窗走向详情 -->
-    <el-dialog title="修改信息"
+    <el-dialog title="流程日志"
       top="10vh"
       :visible.sync="visibleEmShow"
       width="80%">
@@ -95,7 +84,7 @@ export default {
       list: [], // 表格数据
       currentPage: 1, // 当前页码
       pageSize: 10, // 页面大小
-      productName: '', // 商品名查询
+      flowName: '', // 流程名查询
       logList: [],
       visibleEmShow: false
     };
@@ -106,7 +95,8 @@ export default {
         {
           name: '单据号',
           align: 'center',
-          prop: 'formId'
+          prop: 'formId',
+          width: 200
         },
         {
           name: '标题',
@@ -173,7 +163,10 @@ export default {
       // 查询表格信息
       this.listLoading = true;
       const data = {
-        employeeId: store.getters.authId
+        employeeId: store.getters.authId,
+        flowName: this.flowName,
+        pageNo: (this.currentPage - 1) * this.pageSize,
+        pageSize: this.pageSize
       };
       personDetailsApi
         .myFlow(data)

@@ -8,16 +8,16 @@ export default [{
       roles: 'productDetail'
     }
   },
-  {
-    path: 'company_profit',
-    name: 'companyProfit',
-    component: () =>
-      import('@/views/workCenter/companyProfit/index.vue'),
-    meta: {
-      title: 'companyProfit', // 公司盈利
-      roles: 'companyEarnings'
-    }
-  },
+  // {
+  //   path: 'company_profit',
+  //   name: 'companyProfit',
+  //   component: () =>
+  //     import('@/views/workCenter/companyProfit/index.vue'),
+  //   meta: {
+  //     title: 'companyProfit', // 公司盈利
+  //     roles: 'companyEarnings'
+  //   }
+  // },
   {
     path: 'sell-log',
     name: 'sellLog',
@@ -50,16 +50,16 @@ export default [{
       roles: 'outStorageRequest'
     }
   },
-  {
-    path: 'product-bad-request',
-    name: 'productBadRequest',
-    component: () =>
-      import('@/views/workCenter/index.vue'),
-    meta: {
-      title: 'productBadRequest', // 商品损毁报告
-      roles: 'productDad'
-    }
-  },
+  // {
+  //   path: 'product-bad-request',
+  //   name: 'productBadRequest',
+  //   component: () =>
+  //     import('@/views/workCenter/index.vue'),
+  //   meta: {
+  //     title: 'productBadRequest', // 商品损毁报告
+  //     roles: 'productDad'
+  //   }
+  // },
   // 人事部
   {
     path: 'employee_info',

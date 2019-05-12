@@ -16,12 +16,16 @@ const user = {
     avatar: '',
     roles: [],
     authId: '',
-    deptName: ''
+    deptName: '',
+    postId: ''
   },
 
   mutations: {
     SET_AUTHID: (state, authId) => {
       state.authId = authId;
+    },
+    SET_POSTID: (state, postId) => {
+      state.postId = postId;
     },
     SET_DEPTNAME: (state, deptName) => {
       state.deptName = deptName;
@@ -66,7 +70,9 @@ const user = {
           commit('SET_NAME', data.name);
           commit('SET_AUTHID', data.employeeId);
           commit('SET_DEPTNAME', data.deptName);
+          commit('SET_POSTID', data.postId);
           commit('SET_AVATAR', data.avatar || 'https://gitee.com/uploads/57/302857_webcjs.png');
+          // commit('SET_AVATAR', data.avatar || '../../assets/images/avatar');
           resolve(response);
         }).catch(error => {
           reject(error);

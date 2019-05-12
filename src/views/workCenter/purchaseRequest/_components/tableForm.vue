@@ -2,7 +2,6 @@
   <div>
     <el-form ref="form"
       :model="productInfo"
-      size="mini"
       label-suffix="："
       label-width="100px">
       <el-row>
@@ -10,23 +9,41 @@
         <el-col :span="12">
           <el-form-item label="商品编号">
             <el-input v-model="productInfo.productId"
-              disabled="true"></el-input>
+              disabled></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">&nbsp;</el-col>
-        <el-col :span="6">
+        <el-col :span="12">
           <el-form-item label="商品名">
             <el-input v-model="productInfo.productName"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+      </el-row>
+      <el-row>
+        <el-col :span="3">&nbsp;</el-col>
+        <el-col :span="12">
           <el-form-item label="商品类别">
-            <el-input v-model="productInfo.productType"></el-input>
+            <el-select v-model="productInfo.productType"
+              placeholder="商品类别">
+              <el-option label="食品"
+                value="食品"></el-option>
+              <el-option label="药品"
+                value="药品"></el-option>
+              <el-option label="服装"
+                value="服装"></el-option>
+              <el-option label="日用品"
+                value="日用品"></el-option>
+              <el-option label="其他"
+                value="其他"></el-option>
+              <el-option label="五金"
+                value="五金"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
+
       <el-row>
         <el-col :span="3">&nbsp;</el-col>
         <el-col :span="6">
@@ -36,54 +53,59 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="售价">
-            <el-input v-model="productInfo.unitPrice"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3">&nbsp;</el-col>
-        <el-col :span="6">
-          <el-form-item label="单位">
-            <el-input v-model="productInfo.unit"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="进购数量">
-            <el-input v-model="productInfo.byNum"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="3">&nbsp;</el-col>
-        <el-col :span="6">
-          <el-form-item label="生产日期">
-            <el-input v-model="productInfo.expirationDate"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="保质期">
-            <el-input v-model="productInfo.expirationDate"></el-input>
+            <el-input v-model="productInfo.sellPrice"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">&nbsp;</el-col>
         <el-col :span="12">
-          <el-form-item label="供货商">
-            <el-input v-model="productInfo.company"></el-input>
+          <el-form-item label="单位">
+            <el-select v-model="productInfo.unit"
+              filterable>
+              <el-option label="个"
+                value="个"></el-option>
+              <el-option label="瓶"
+                value="瓶"></el-option>
+              <el-option label="条"
+                value="条"></el-option>
+              <el-option label="斤"
+                value="斤"></el-option>
+              <el-option label="块"
+                value="块"></el-option>
+              <el-option label="箱"
+                value="箱"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="3">&nbsp;</el-col>
-        <el-col :span="6">
-          <el-form-item label="联系人">
-            <el-input v-model="productInfo.people"></el-input>
+        <el-col :span="7">
+          <el-form-item label="进购数量">
+            <el-input v-model="productInfo.num"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
-          <el-form-item label="电话">
-            <el-input v-model="productInfo.phone"></el-input>
+      </el-row>
+      <el-row>
+        <el-col :span="3">&nbsp;</el-col>
+        <el-col :span="12">
+          <el-form-item label="生产日期">
+            <el-date-picker v-model="productInfo.createDate"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="3">&nbsp;</el-col>
+        <el-col :span="12">
+          <el-form-item label="保质期">
+            <el-date-picker v-model="productInfo.expirationDate"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -100,7 +122,7 @@
   </div>
 </template>
 <script>
-// import { deptPostList } from '@/utils/baseTools';
+import workCenterApi from '@/api/workCenter';
 export default {
   data() {
     return {
@@ -111,45 +133,82 @@ export default {
         productName: '',
         productType: '',
         unitPrice: '',
+        sellPrice: '',
         unit: '',
-        byNum: '',
+        num: '',
+        createDate: '',
         expirationDate: '',
-        company: '',
-        people: '',
-        phone: ''
+        discount: '1'
+      },
+      rules: {
+        employeeName: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        account: [
+          { required: true, message: '请输入员工登录账号', trigger: 'blur' },
+          { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur' }
+        ],
+        sex: [{ required: true, message: '请选择员工性别', trigger: 'blur' }],
+        idCard: [{ required: true, message: '请输入身份证', trigger: 'blur' }],
+        deptPost: [{ required: true, message: '请选择岗位', trigger: 'blur' }],
+        phone: [{ required: true, message: '请输入员工电话', trigger: 'blur' }]
       }
     };
   },
-  mounted() {
-    // this.initForm();
+  created() {
+    this.productInfo.productId = new Date().getTime();
   },
   methods: {
     onSubmit() {
-      this.onSubmit();
+      this.addproductInfo();
     },
     addproductInfo() {
       const data = {
-        employeeId: this.productInfo.employeeId,
-        name: this.productInfo.name,
-        sex: this.productInfo.sex,
-        phone: this.productInfo.phone,
-        idCard: this.productInfo.idCard,
-        dept: this.selectedOptions[0],
-        post: this.selectedOptions[1]
+        productId: this.productInfo.productId,
+        productName: this.productInfo.productName,
+        productType: this.productInfo.productType,
+        unitPrice: this.productInfo.unitPrice,
+        sellPrice: this.productInfo.sellPrice,
+        unit: this.productInfo.unit,
+        num: this.productInfo.num,
+        createDate: this.myFormatDate(this.productInfo.createDate),
+        expirationDate: this.myFormatDate(this.productInfo.expirationDate),
+        discount: this.productInfo.discount
       };
-      console.log(data);
-      // dictionaryApi
-      //   .pageList(data)
-      //   .then(res => {
-      //     this.options = res.robj.items;
-      //     this.initTableData();
-      //   })
-      //   .catch(res => {
-      //     this.$message.error('数据请求失败');
-      //   });
+      workCenterApi
+        .addProduct(data)
+        .then(res => {
+          if (res.robj.addStatus) {
+            this.$message.success('添加成功');
+          } else {
+            this.$message.error('添加成功');
+          }
+        })
+        .catch(res => {
+          this.$message.error('数据请求失败!');
+          this.listLoading = false;
+        });
+      this.initForm();
     },
     initForm() {
-      this.productInfo.employeeId = new Date().getTime();
+      this.productInfo.productId = new Date().getTime();
+      this.productInfo.productName = '';
+      this.productInfo.productType = '';
+      this.productInfo.unitPrice = '';
+      this.productInfo.sellPrice = '';
+      this.productInfo.unit = '';
+      this.productInfo.num = '';
+      this.productInfo.createDate = '';
+      this.productInfo.expirationDate = '';
+      this.productInfo.discount = '1';
+    },
+    myFormatDate(date) {
+      var strDate = date.getFullYear() + '-';
+      const month = date.getMonth() + 1;
+      strDate += (month < 10 ? '0' + month : month) + '-';
+      const day = date.getDate();
+      strDate += day < 10 ? '0' + day : day;
+      return strDate;
     }
   }
 };

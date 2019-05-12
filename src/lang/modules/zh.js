@@ -6,8 +6,8 @@ export default {
     companyProfit: '公司盈利',
     productDetails: '产品详情',
     sellLog: '销售记录',
-    purchaseRequest: '采购申请',
-    outStorageRequest: '销售申请',
+    purchaseRequest: '采购商品',
+    outStorageRequest: '销售清单',
     indentRequest: '订单查询',
     productBadRequest: '商品损毁报告',
     flowCheck: '流程审批',
@@ -63,8 +63,11 @@ export default {
     checkState: '考勤状态'
   },
   // 我的信息
-  myInfo: {
-
+  myInfo: {},
+  date: {
+    end: '结束时间',
+    start: '开始时间',
+    label: '时间选择'
   },
   navbar: {
     logOut: '退出登录',

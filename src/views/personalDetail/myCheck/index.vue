@@ -9,6 +9,7 @@
       <el-form-item :label="this.$t('myCheck.checkState')"
         prop="name">
         <el-select v-model="value"
+          clearable
           placeholder="请选择">
           <el-option v-for="item in options"
             :key="item.value"
@@ -65,15 +66,15 @@ export default {
       productName: '', // 商品名查询
       options: [
         {
-          value: 'one',
+          value: '迟到',
           label: '迟到'
         },
         {
-          value: 'two',
+          value: '早退',
           label: '早退'
         },
         {
-          value: 'three',
+          value: '未打卡',
           label: '未打卡'
         }
       ],
@@ -118,7 +119,11 @@ export default {
     init() {
       // 查询表格信息
       this.listLoading = true;
-      const data = {};
+      const data = {
+        state: this.value,
+        pageNo: (this.currentPage - 1) * this.pageSize,
+        pageSize: this.pageSize
+      };
       personDetailsApi
         .myCheck(data)
         .then(res => {

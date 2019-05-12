@@ -54,9 +54,6 @@ export const deptPostList = [{
     children: [{
       value: 'CWB1557217001020',
       label: '财务部经理'
-    }, {
-      value: 'CGB1557217001014',
-      label: '采购员'
     }]
   },
   {
@@ -71,3 +68,45 @@ export const deptPostList = [{
     }]
   }
 ];
+export function getDeptName(str) {
+  if (str === 'XSB') {
+    return '销售部';
+  }
+  if (str === 'CGB') {
+    return '采购部';
+  }
+  if (str === 'CWB') {
+    return '财务部';
+  }
+  if (str === 'RSB') {
+    return '人事部';
+  }
+  return '';
+}
+export function getPostName(str) {
+  if (str.length < 2) {
+    return '';
+  }
+  if (str === 'CGB,CGB1557217001013') {
+    return '采购部经理';
+  }
+  if (str === 'CGB1557217001014') {
+    return '采购员';
+  }
+  if (str === 'XSB1557217001015') {
+    return '销售部经理';
+  }
+  if (str === 'XSB1557217001016') {
+    return '销售员';
+  }
+  if (str === 'CWB1557217001020') {
+    return '财务部经理';
+  }
+  if (str === 'RSB1557217001022') {
+    return '人事部经理';
+  }
+  if (str === 'RSB1557217001021') {
+    return '人事专员';
+  }
+  return '';
+}

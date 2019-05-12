@@ -1,15 +1,15 @@
 <template>
   <div class="tiny-container">
     <h3 class="page-title">添加员工模块</h3>
-    <table-form></table-form>
+    <employee-add-form></employee-add-form>
   </div>
 </template>
 <script>
-import tableForm from './_compontes/tableForm';
+import employeeAddForm from './_compontes/employeeAddForm';
 export default {
   name: 'productDetails',
   components: {
-    tableForm
+    employeeAddForm
   }
 };
 </script>

@@ -9,14 +9,14 @@
 <script>
 export default {
   props: ['row', 'col', 'column', 'val'],
-  data() {
-    return {
-      dialogVisible: false
-    };
-  },
+  // data() {
+  //   return {
+  //     dialogVisible: false
+  //   };
+  // },
   methods: {
     clickTo() {
-      this.$emit('get-table', this.row);
+      this.$emit('get-detail', this.row);
     }
   }
 };

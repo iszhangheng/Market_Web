@@ -24,7 +24,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <lang-select></lang-select>
+    <!-- <lang-select></lang-select> -->
   </div>
 </template>
 

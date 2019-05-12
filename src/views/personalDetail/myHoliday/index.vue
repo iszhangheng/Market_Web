@@ -9,6 +9,7 @@
       <el-form-item :label="this.$t('myHoliday.restType')"
         prop="name">
         <el-select v-model="restType"
+          clearable
           placeholder="请选择">
           <el-option v-for="item in options"
             :key="item.value"

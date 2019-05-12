@@ -12,7 +12,7 @@
         <el-col :span="1">&nbsp;</el-col>
         <el-col :span="10">
           <el-form-item label="单据号：">
-            <el-input v-model="form.restId"
+            <el-input v-model="form.formId"
               disabled="true"></el-input>
           </el-form-item>
         </el-col>
@@ -50,12 +50,12 @@
         <el-col :span="1">&nbsp;</el-col>
         <el-col :span="10">
           <el-form-item label="收款银行卡号：">
-            <el-input v-model="form.replaceName"></el-input>
+            <el-input v-model="form.bankId"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="10">
           <el-form-item label="总金额：">
-            <el-input v-model="form.phone"></el-input>
+            <el-input v-model="form.money"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -86,21 +86,21 @@
 </template>
 
 <script>
+import store from '@/store';
+import serviceCenterApi from '@/api/serviceCenter';
 export default {
   name: 'pageAccess',
   data() {
     return {
       form: {
-        restId: '',
-        requestDate: '',
-        employeeName: '',
-        deptName: '',
-        formTitle: '',
-        replaceName: '',
-        phone: '',
-        remark: '',
-        date: [],
-        sumDay: ''
+        formId: '', // 流程ID
+        requestDate: '', // 申请日期
+        employeeName: '', // 员工姓名
+        deptName: '', // 部门名
+        formTitle: '', // 标题
+        bankId: '', // 银行卡号
+        money: '', // 金额
+        remark: '' // 备注
       }
     };
   },
@@ -108,35 +108,50 @@ export default {
     this.initForm();
   },
   methods: {
+    init() {
+      this.listLoading = true;
+      const data = {
+        formId: this.form.formId,
+        requestDate: this.form.requestDate,
+        employeeId: store.getters.authId,
+        employeeName: this.form.employeeName,
+        employeePost: store.getters.postId,
+        deptName: this.form.deptName,
+        formTitle: this.form.formTitle,
+        bankId: this.form.bankId,
+        money: this.form.money,
+        remark: this.form.remark
+      };
+      serviceCenterApi
+        .addBuyInfo(data)
+        .then(res => {
+          if (res.robj.addStatus) {
+            this.$message.success('保存成功!');
+          } else {
+            this.$message.error('保存失败!');
+          }
+          this.listLoading = false;
+        })
+        .catch(res => {
+          this.$message.error('数据请求失败!');
+          this.listLoading = false;
+        });
+    },
     // 保存请假单
     onSubmit() {
-      this.$message.success('提交成功!');
+      this.init();
       this.initForm();
-    },
-    computeSumDay() {
-      if (this.form.date != null) {
-        this.form.sumDay = Math.round(
-          (this.form.date[1] - this.form.date[0]) / (3600 * 1000 * 24)
-        );
-      } else {
-        this.form.sumDay = 0;
-      }
     },
     initForm() {
       var myDate = new Date();
-      this.form.restId = 'CCBX' + myDate.getTime();
+      this.form.formId = 'CCBX' + myDate.getTime();
       this.form.requestDate = this.myFormatDate(myDate);
-      this.form.employeeName = '张三';
-      this.form.deptName = '销售部';
-      this.form.formTitle = '张三' + '的报销流程';
-      this.form.replaceName = '';
-      this.form.phone = '';
+      this.form.employeeName = store.getters.name;
+      this.form.deptName = store.getters.deptName;
+      this.form.formTitle = store.getters.name + '的报销流程';
+      this.form.bankId = '';
+      this.form.money = '';
       this.form.remark = '';
-      this.form.sumDay = 1;
-      this.form.date = [
-        new Date(),
-        new Date().setTime(new Date().getTime() + 3600 * 1000 * 24 * 1)
-      ];
     },
     myFormatDate(date) {
       var strDate = date.getFullYear() + '-';

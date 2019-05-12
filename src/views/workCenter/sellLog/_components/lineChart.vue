@@ -4,18 +4,19 @@
       :inline="true"
       size="mini">
       <!-- 时间选择 -->
-      <el-form-item prop="name">
+      <!-- <el-form-item prop="name"
+        :label="this.$t('date.label')">
         <el-date-picker v-model="date"
           type="daterange"
           align="center"
           unlink-panels
+          :change="test"
           :start-placeholder="this.$t('date.start')"
           :end-placeholder="this.$t('date.end')"
           :default-time="['00:00:00', '23:59:59']"
-          value-format="timestamp"
-          :picker-options="pickerOptions">
+          value-format="timestamp">
         </el-date-picker>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <div class="page"
       v-if="dataShow">
@@ -32,20 +33,15 @@
 
 <script>
 import lineMarker from '@/components/Charts/lineMarker';
-import mixin from '@/utils/mixin';
+import workCenterApi from '@/api/workCenter';
 export default {
-  props: ['productId'],
-  mixins: [mixin],
+  props: ['productName'],
   components: { lineMarker },
   data() {
     return {
       dataShow: false,
       loading: true,
-      // date: [
-      //   new Date().setTime(new Date().getTime() - 3600 * 1000 * 24 * 7),
-      //   new Date()
-      // ],
-      date: this.newdate,
+      date: [],
       lineOption: {
         title: {
           text: ''
@@ -79,13 +75,34 @@ export default {
       }
     };
   },
-  created() {
+  mounted() {
     this.initForm();
   },
   methods: {
+    test() {
+      alert(1);
+    },
     initForm() {
-      this.lineOption.xAxis.data = ['5', '6', '7', '8'];
-      this.lineOption.series[0].data = [12, 64, 12, 24];
+      const data = {
+        productName: this.productName,
+        startDate: this.date !== null ? this.date[0] : '',
+        endDate: this.date !== null ? this.date[1] : ''
+      };
+      workCenterApi
+        .getProductSellLine(data)
+        .then(res => {
+          const Xdate = [];
+          const Ydate = [];
+          res.robj.items.forEach(element => {
+            Xdate.push(element.discount);
+            Ydate.push(element.num);
+          });
+          this.lineOption.xAxis.data = Xdate;
+          this.lineOption.series[0].data = Ydate;
+        })
+        .catch(res => {
+          this.$message.error('数据请求失败!');
+        });
     }
   }
 };

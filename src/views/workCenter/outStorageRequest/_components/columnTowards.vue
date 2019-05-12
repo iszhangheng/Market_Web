@@ -2,7 +2,7 @@
   <div>
     <a href="javascript:" class="chartBtn"
       @click="clickTo">
-      <i class="el-icon-delete"></i>
+      <i class="el-icon-shopping-cart-full"></i>
     </a>
   </div>
 </template>

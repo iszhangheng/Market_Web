@@ -4,7 +4,7 @@
       :inline="true"
       size="mini">
       <!-- 时间选择 -->
-      <el-form-item prop="name">
+      <!-- <el-form-item prop="name">
         <el-date-picker v-model="date"
           type="daterange"
           align="center"
@@ -15,7 +15,7 @@
           value-format="timestamp"
           :picker-options="pickerOptions">
         </el-date-picker>
-      </el-form-item>
+      </el-form-item>-->
     </el-form>
     <div class="page"
       v-if="dataShow">
@@ -31,20 +31,17 @@
 </template>
 
 <script>
+import workCenterApi from '@/api/workCenter';
 import lineMarker from '@/components/Charts/lineMarker';
 import mixin from '@/utils/mixin';
 export default {
-  props: ['productId'],
+  props: ['productName'],
   mixins: [mixin],
   components: { lineMarker },
   data() {
     return {
       dataShow: false,
       loading: true,
-      // date: [
-      //   new Date().setTime(new Date().getTime() - 3600 * 1000 * 24 * 7),
-      //   new Date()
-      // ],
       date: this.newdate,
       lineOption: {
         title: {
@@ -79,17 +76,38 @@ export default {
       }
     };
   },
-  created() {
+  mounted() {
     this.initForm();
   },
   methods: {
     initForm() {
-      this.lineOption.xAxis.data = [
-        '2018-01-01',
-        '2018-01-02',
-        '2018-01-03'
-      ];
-      this.lineOption.series[0].data = [12, 15, 64];
+      // 查询表格信息
+      this.listLoading = true;
+      const data = {
+        productName: this.productName,
+        startDate: '',
+        endDate: ''
+      };
+      workCenterApi
+        .getProductLine(data)
+        .then(res => {
+          const Xdate = [];
+          const Ydate = [];
+          res.robj.items.forEach(element => {
+            Xdate.push(element.date);
+            Ydate.push(element.count);
+          });
+          this.lineOption.xAxis.data = Xdate;
+          this.lineOption.series[0].data = Ydate;
+          this.listLoading = false;
+          if (res.robj.items.length === 0) {
+            this.dataShow = true;
+          }
+        })
+        .catch(res => {
+          this.$message.error('数据请求失败!');
+          this.listLoading = false;
+        });
     }
   }
 };
